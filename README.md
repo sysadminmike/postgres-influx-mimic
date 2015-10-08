@@ -57,18 +57,11 @@ Should give back something similar to influx which can be used for grafana
 >                     \"values\": ' || v || ' \
 >                 }] \
 >         }]}' AS ret FROM values"
-Pretend to be influx
-SQL: WITH results AS (   SELECT to_timestamp((doc->>'ts')::int) AS time, (doc->>'count')::numeric AS value
-FROM aatest   WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0  
-ORDER BY time LIMIT 10),
-values AS (SELECT json_agg(json_build_array(time,value)) AS v FROM results) 
-SELECT '{"results": [{             "series": [{                     "name": "statsd.packets_received",                     "columns": ["time", "value"],                     "values": ' || v || '                 }]         }]}' AS ret FROM values
 
 
-
-
-
-{"results": [{             "series": [{                     "name": "statsd.packets_received",                     "columns": ["time", "value"],
+{"results": [{             "series": [{
+"name": "statsd.packets_received",   
+"columns": ["time", "value"],
 "values": [["2015-02-23T23:23:46+00:00", 1],
 ["2015-02-23T23:24:56+00:00", 501], 
 ["2015-02-23T23:25:46+00:00", 501], 
