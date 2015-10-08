@@ -40,7 +40,7 @@ SELECT '{\"results\": [{ \
         }]}' AS ret FROM values"
 ```
 
-Should give back something similar to influx which can be used for graphite
+Should give back something similar to influx which can be used for grafana
 
 ```
 [mike@f10 ~]$ curl -G 'http://192.168.3.22:8086/query?pretty=true' --data-urlencode "q=WITH \
@@ -84,4 +84,4 @@ SELECT '{"results": [{             "series": [{                     "name": "sta
 ```
 
 
-Point grafa at it - need to get this tested now and see what happens 
+Point grafana at it - need to get this tested now and see what happens 
