@@ -38,8 +38,8 @@ function onRequest(request, response) {
     switch (queryObject.pathname) {
         case '/query':
 
-            response.write("Pretend to be influx\n");            
-            response.write("SQL: " + queryObject.query.q + "\n"); 
+           // response.write("Pretend to be influx\n");            
+            //response.write("SQL: " + queryObject.query.q + "\n"); 
 
             console.log(queryObject.query.q);
 
