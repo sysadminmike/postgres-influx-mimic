@@ -3,7 +3,7 @@
 
 var pg = require('pg');
 
-var conString = "postgres://mike:highgate22@192.168.3.22/couchplay";
+var conString = "postgres://mike:test@192.168.3.22/couchplay";
 
 
 pgclient = new pg.Client(conString);
