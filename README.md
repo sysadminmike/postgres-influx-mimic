@@ -88,8 +88,7 @@ To: ```(doc->>'ts')::numeric * 1000 AS time```
 I have tested this and can see grafana making a request to the daemon:
 
 ```
-/query?pretty=true&q=WITH%20results%20AS%20%28%20SELECT%20%28doc-%3E%3E%27ts%27%29%3A%3Anumeric%20%2A%201000%20AS%20time%2C%20%28doc-%3E%3E%27count%27%29%3A%3Anumeric%20AS%20value%20FROM%20aatest%20WHERE%20doc-%3E%3E%27name%27%3D%27statsd.packets_received%27%20AND%20%28doc-%3E%3E%27count%27%29%3A%3Anumeric%20%3E%200%20ORDER%20BY%20time%29%2C%20values%20AS%20%28SELECT%20json_agg%28json_build_array%28time%2Cvalue%29%29%20AS%20v%20FROM%20results%29%20SELECT%20%27%7B%22results%22%3A%20%5B%7B%20%22series%22%3A%20%5B%7B%20%22name%22%3A%20%22statsd.packets_received%22%2C%20%22columns%22%3A%20%5B%22time%22%2C%20%22value%22%5D%2C%20%22values%22%3A%20%27%20%7C%7C%20v%20%7C%7C%20%27%20%7D%5D%20%7D%5D%7D%27%20AS%20ret%20FROM%20values
-WITH results AS ( SELECT (doc->>'ts')::numeric * 1000 AS time, (doc->>'count')::numeric AS value FROM aatest WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0 ORDER BY time), values AS (SELECT json_agg(json_build_array(time,value)) AS v FROM results) SELECT '{"results": [{ "series": [{ "name": "statsd.packets_received", "columns": ["time", "value"], "values": ' || v || ' }] }]}' AS ret FROM values
+/query?db=na&epoch=ms&p=na&q=WITH+results+AS+(+SELECT+(doc-%3E%3E%27ts%27)::numeric+*+1000+AS+time,+(doc-%3E%3E%27count%27)::numeric+AS+value+FROM+aatest+WHERE+doc-%3E%3E%27name%27%3D%27statsd.packets_received%27+AND+(doc-%3E%3E%27count%27)::numeric+%3E+0+ORDER+BY+time),+values+AS+(SELECT+json_agg(json_build_array(time,value))+AS+v+FROM+results)+SELECT+%27%7B%22results%22:+%5B%7B+%22series%22:+%5B%7B+%22name%22:+%22statsd.packets_received%22,+%22columns%22:+%5B%22time%22,+%22mean%22%5D,+%22values%22:+%27+%7C%7C+v+%7C%7C+%27+%7D%5D+%7D%5D%7D%27+AS+ret+FROM+values&u=na
 ```
 
 however it doesnt seem to like the results returned current output from daemon looks like:
