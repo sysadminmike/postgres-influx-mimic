@@ -45,7 +45,7 @@ Should give back something similar to influx which can be used for grafana
 ```
 [mike@f10 ~]$ curl -G 'http://192.168.3.22:8086/query?pretty=true' --data-urlencode "q=WITH \
 > results AS ( \
->   SELECT to_timestamp((doc->>'ts')::int) AS time, (doc->>'count')::numeric AS value FROM aatest \
+>   SELECT to_timestamp((doc->>'ts')::int) at time zone 'UTC' AS time, (doc->>'count')::numeric AS value FROM aatest \
 >   WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0 \
 >   ORDER BY time LIMIT 10\
 > ), \
