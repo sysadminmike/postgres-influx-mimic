@@ -126,3 +126,6 @@ Which postgres doesnt like so needs to be more like:
 ```
 
 I think https://github.com/grafana/grafana/blob/v2.1.x/public/app/plugins/datasource/influxdb/datasource.js#L175 needs to be customised for this to work properly.
+
+
+The ```$interval``` variable is also avaliable in the raw sql again this needs to be properly quoted.
