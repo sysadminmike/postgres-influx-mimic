@@ -26,7 +26,7 @@ in another window query it:
 ```
 curl -G 'http://192.168.3.22:8086/query?pretty=true' --data-urlencode "q=WITH \
 results AS ( \
-  SELECT to_timestamp((doc->>'ts')::int) AS time, (doc->>'count')::numeric AS value FROM aatest \
+  SELECT to_timestamp((doc->>'ts')::int) at time zone 'UTC' AS time, (doc->>'count')::numeric AS value FROM aatest \
   WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0 \
   ORDER BY time \
 ), \
@@ -62,16 +62,16 @@ Should give back something similar to influx which can be used for grafana
 {"results": [{             "series": [{
 "name": "statsd.packets_received",   
 "columns": ["time", "value"],
-"values": [["2015-02-23T23:23:46+00:00", 1],
-["2015-02-23T23:24:56+00:00", 501], 
-["2015-02-23T23:25:46+00:00", 501], 
-["2015-02-23T23:28:23+00:00", 501],
-["2015-02-23T23:28:43+00:00", 89],
-["2015-02-23T23:28:53+00:00", 3235], 
-["2015-02-23T23:29:03+00:00", 1181],
-["2015-02-23T23:29:33+00:00", 530],
-["2015-02-23T23:29:43+00:00", 7003],
-["2015-02-23T23:29:53+00:00", 5604]]                 }]         }]}
+"values": [["2015-02-23T23:23:46", 1],
+["2015-02-23T23:24:56", 501], 
+["2015-02-23T23:25:46", 501], 
+["2015-02-23T23:28:23", 501],
+["2015-02-23T23:28:43", 89],
+["2015-02-23T23:28:53", 3235], 
+["2015-02-23T23:29:03", 1181],
+["2015-02-23T23:29:33", 530],
+["2015-02-23T23:29:43", 7003],
+["2015-02-23T23:29:53", 5604]]                 }]         }]}
 [mike@f10 ~]$ 
 
 ```
