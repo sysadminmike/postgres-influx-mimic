@@ -58,11 +58,10 @@ function onRequest(request, response) {
     	        if (err) {
 	            console.error('ERROR: ', err);
                 }else{
-//	            console.error('ret: ', result.rows[0].ret);
                     response.write( String(result.rows[0].ret) );	    
+//	            console.error('ret: ', result.rows[0].ret);
 		}
                 response.end();
-	            console.error('ret: ', result.rows[0].ret);
 
             });
             break;
