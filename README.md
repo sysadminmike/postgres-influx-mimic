@@ -101,3 +101,28 @@ however it doesnt seem to like the results returned current output from daemon l
 After a little messing about i have now added the CORS stuff to the node daemon and I get a graph!
 
 ![Example Graph](/test-example-conf.png)
+
+
+More info
+
+The ```$timeFilter``` variable is avaliable to the raw SQL so something like the below:
+
+```
+ SELECT (doc->>'ts')::numeric * 1000 AS time, (doc->>'count')::numeric AS value FROM aatest 
+ WHERE ($timeFilter) ...
+```
+
+Is expanded to: 
+```
+ SELECT (doc->>'ts')::numeric * 1000 AS time, (doc->>'count')::numeric AS value 
+ FROM aatest WHERE (time > now() - 6h) ...
+```
+
+Which postgres doesnt like so needs to be more like:
+
+``` 
+ SELECT (doc->>'ts')::numeric * 1000 AS time, (doc->>'count')::numeric AS value
+ FROM aatest WHERE ( to_timestamp((doc->>'ts')::numeric) > now() - interval '6h')
+```
+
+I think https://github.com/grafana/grafana/blob/v2.1.x/public/app/plugins/datasource/influxdb/datasource.js#L175 needs to be customised for this to work properly.
