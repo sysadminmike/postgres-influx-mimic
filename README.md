@@ -76,5 +76,12 @@ Should give back something similar to influx which can be used for grafana
 
 ```
 
+Getting results with different time format:
+Change ```to_timestamp((doc->>'ts')::int) at time zone 'UTC' AS time```
+To: ```(doc->>'ts')::numeric * 1000 AS time```
+
+[1424789698000, 2712], 
+[1424789701000, 1826],
+[1424789704000, 263]
 
 Point grafana at it - need to get this tested now and see what happens 
