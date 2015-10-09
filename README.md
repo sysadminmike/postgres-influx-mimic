@@ -99,3 +99,5 @@ however it doesnt seem to like the results returned current output from daemon l
 
 
 After a little messing about i have now added the CORS stuff to the node daemon and I get a graph!
+
+![Example Graph](/test-example-conf.png)
