@@ -157,6 +157,9 @@ SELECT string_agg(v,'') AS ret FROM results
 
 
 You can just generate some random data to play with:
+```
+WITH results1 AS (SELECT extract(epoch from x) * 1000 AS time , random() * 9 + 1 AS value FROM generate_series ( '2015-10-10'::timestamp , now()::timestamp, '1 minute'::interval) x LIMIT 1000000), results AS (SELECT '{ "results": [' AS v UNION ALL SELECT '{ "series": [{ "name": "myseries.random", "columns": ["time", "count"], "values": ' || json_agg(json_build_array(time,value))  || ' }] }' AS v FROM results1 UNION ALL SELECT ']}' AS v) SELECT string_agg(v,'') AS ret FROM results
+```
 
 A funny sine curve:
 ```
