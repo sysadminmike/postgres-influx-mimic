@@ -154,14 +154,19 @@ results AS (
 ) 
 SELECT string_agg(v,'') AS ret FROM results
 ```
+![2 Series](/2-series.png)
 
 
 You can just generate some random data to play with:
 ```
 WITH results1 AS (SELECT extract(epoch from x) * 1000 AS time , random() * 9 + 1 AS value FROM generate_series ( '2015-10-10'::timestamp , now()::timestamp, '1 minute'::interval) x LIMIT 1000000), results AS (SELECT '{ "results": [' AS v UNION ALL SELECT '{ "series": [{ "name": "myseries.random", "columns": ["time", "count"], "values": ' || json_agg(json_build_array(time,value))  || ' }] }' AS v FROM results1 UNION ALL SELECT ']}' AS v) SELECT string_agg(v,'') AS ret FROM results
 ```
+![Random](/random.png)
+
 
 A funny sine curve:
 ```
 WITH results1 AS (SELECT extract(epoch from x) * 1000 AS time , SIN(extract(minute from x) * 3.141592653 / 12) AS value FROM generate_series ( '2015-10-10'::timestamp , now()::timestamp, '1 minute'::interval) x LIMIT 1000000), results AS (SELECT '{ "results": [' AS v UNION ALL SELECT '{ "series": [{ "name": "myseries.random", "columns": ["time", "count"], "values": ' || json_agg(json_build_array(time,value))  || ' }] }' AS v FROM results1 UNION ALL SELECT ']}' AS v) SELECT string_agg(v,'') AS ret FROM results
 ```
+
+![Sine Curve](/sine-curve.png)
