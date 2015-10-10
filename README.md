@@ -129,3 +129,28 @@ I think https://github.com/grafana/grafana/blob/v2.1.x/public/app/plugins/dataso
 
 
 The ```$interval``` variable is also avaliable in the raw sql again this needs to be properly quoted.
+
+
+Multiple series - the below example sql shows how to retrieve multiple series in one result:
+
+```
+WITH 
+results1 AS (
+  SELECT (doc->>'ts')::numeric * 1000 AS time, (doc->>'count')::numeric AS value 
+  FROM aatest WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0 ORDER BY time
+), 
+results2 AS (
+  SELECT ((doc->>'ts')::numeric - 600) * 1000 AS time, (doc->>'count')::numeric AS value 
+  FROM aatest WHERE doc->>'name'='statsd.packets_received' AND (doc->>'count')::numeric > 0 ORDER BY time
+),
+results AS (
+  SELECT '{ "results": [' AS v 
+  UNION ALL 
+  SELECT '{ "series": [{ "name": "statsd.packets_received-1", "columns": ["time", "count"], "values": ' || json_agg(json_build_array(time,value))  || ' }] }' AS v FROM results1 
+  UNION ALL 
+  SELECT ',{ "series": [{ "name": "statsd.packets_received-2", "columns": ["time", "count"], "values": ' || json_agg(json_build_array(time,value))  || ' }] }' AS v FROM results2 
+  UNION ALL 
+  SELECT ']}' AS v 
+) 
+SELECT string_agg(v,'') AS ret FROM results
+```
