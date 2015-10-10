@@ -170,3 +170,12 @@ WITH results1 AS (SELECT extract(epoch from x) * 1000 AS time , SIN(extract(minu
 ```
 
 ![Sine Curve](/sine-curve.png)
+
+
+
+Further reading on time series and sql:
+
+http://no0p.github.io/postgresql/2014/05/08/timeseries-tips-pg.html
+
+http://grisha.org/blog/2015/03/28/on-time-series/
+
