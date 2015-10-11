@@ -179,3 +179,4 @@ http://no0p.github.io/postgresql/2014/05/08/timeseries-tips-pg.html
 
 http://grisha.org/blog/2015/03/28/on-time-series/
 
+http://www.depesz.com/2015/06/06/filling-in-the-blanks/
