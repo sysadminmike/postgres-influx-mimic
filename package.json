@@ -1,0 +1,22 @@
+{
+  "name": "postgres-influx-mimic",
+  "version": "0.0.3",
+  "description": "Node proxy to pretend PostgreSQL is InfluxDB for Grafana",
+  "main": "pg-influx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "postgresql",
+    "postgres",
+    "influxdb",
+    "grafana",
+    "proxy"
+  ],
+  "author": "Mike Wolman <mike@wolman.co.uk>",
+  "license": "BSD",
+  "homepage": "https://github.com/sysadminmike",
+  "dependencies": {
+    "pg": "4.1.1"
+  }
+}

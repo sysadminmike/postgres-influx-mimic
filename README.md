@@ -1,6 +1,8 @@
 # postgres-influx-mimic
 node proxy to query postgres but output as influx for grafana backend
 
+```npm i postgres-influx-mimic```
+
 Postgres db contains jsonb records looking like (the data could come from any table):
 
 ```
